@@ -227,6 +227,8 @@ ResourcePref resources[] = {
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
+	{ ShiftMask,            Button4, kscrollup,      {.i = 1} },
+	{ ShiftMask,            Button5, kscrolldown,    {.i = 1} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
@@ -236,7 +238,9 @@ static MouseShortcut mshortcuts[] = {
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
-#define TERMMOD (ControlMask|ShiftMask)
+#define TERMMOD (Mod1Mask|ShiftMask)
+
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -247,11 +251,18 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_c,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_y,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_Y,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_p,           selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_P,           selpaste,       {.i =  0} },
+	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i =  5} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i =  5} },
+//	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
 };
 
 /*
